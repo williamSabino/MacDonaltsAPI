@@ -1,0 +1,34 @@
+package br.com.will.macdonalts.infra.service;
+
+import br.com.will.macdonalts.domain.usuario.Usuario;
+import br.com.will.macdonalts.domain.usuario.UsuarioDTO;
+import br.com.will.macdonalts.domain.usuario.UsuarioRegisterDTO;
+import br.com.will.macdonalts.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UsuarioService {
+    @Autowired
+    private AuthenticationManager manager;
+    @Autowired
+    private UsuarioRepository repository;
+
+    public ResponseEntity login(UsuarioDTO usuarioDTO) {
+        var token = new UsernamePasswordAuthenticationToken(usuarioDTO.login(),usuarioDTO.senha());
+        var auth = manager.authenticate(token);
+        return ResponseEntity.ok().build();
+    }
+
+
+    public ResponseEntity register(UsuarioRegisterDTO usuarioRegisterDTO) {
+        var senhaEncriptada = new BCryptPasswordEncoder().encode(usuarioRegisterDTO.senha());
+        Usuario usuario = new Usuario(usuarioRegisterDTO.login(), senhaEncriptada, usuarioRegisterDTO.role());
+        repository.save(usuario);
+        return ResponseEntity.ok().build();
+    }
+}
