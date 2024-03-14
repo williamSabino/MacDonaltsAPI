@@ -1,5 +1,6 @@
 package br.com.will.macdonalts.infra.service;
 
+import br.com.will.macdonalts.domain.token.TokenJWTDTO;
 import br.com.will.macdonalts.domain.usuario.Usuario;
 import br.com.will.macdonalts.domain.usuario.UsuarioDTO;
 import br.com.will.macdonalts.domain.usuario.UsuarioRegisterDTO;
@@ -17,11 +18,14 @@ public class UsuarioService {
     private AuthenticationManager manager;
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private TokenJWTService tokenJWTService;
 
     public ResponseEntity login(UsuarioDTO usuarioDTO) {
         var token = new UsernamePasswordAuthenticationToken(usuarioDTO.login(),usuarioDTO.senha());
         var auth = manager.authenticate(token);
-        return ResponseEntity.ok().build();
+        var tokenJWT = tokenJWTService.gerarToken((Usuario) auth.getPrincipal());
+        return ResponseEntity.ok(new TokenJWTDTO(tokenJWT));
     }
 
 
