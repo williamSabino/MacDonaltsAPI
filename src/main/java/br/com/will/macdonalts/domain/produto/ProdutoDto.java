@@ -9,9 +9,11 @@ public record ProdutoDto(
         @NotNull(message = "preco não pode ser null")
         Float preco,
         @NotNull(message = "categoria não pode ser null")
-        Categoria categoria) {
+        Categoria categoria,
+        String imagem
+) {
     public ProdutoDto(Produto p) {
-        this(p.getNome(),p.getPreco(),p.getCategoria());
+        this(p.getNome(),p.getPreco(),p.getCategoria(), p.getImagem());
     }
 
 }

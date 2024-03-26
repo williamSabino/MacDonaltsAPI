@@ -18,9 +18,12 @@ public class Produto{
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
+    private String imagem;
+
     public Produto(ProdutoDto produto) {
         this.nome = produto.nome();
         this.preco = produto.preco();
         this.categoria = produto.categoria();
+        this.imagem = produto.imagem();
     }
 }
