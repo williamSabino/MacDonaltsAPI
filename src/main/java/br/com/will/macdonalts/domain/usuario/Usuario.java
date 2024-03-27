@@ -1,5 +1,6 @@
 package br.com.will.macdonalts.domain.usuario;
 
+import br.com.will.macdonalts.domain.carrinho.Carrinho;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,10 +26,15 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
     public Usuario(String login, String senhaEncriptada, Role role) {
         this.login = login;
         this.senha = senhaEncriptada;
         this.role = role;
+    }
+
+    public Usuario(UsuarioCarrinhoDTO usuario) {
+        this.login = usuario.login();
     }
 
 

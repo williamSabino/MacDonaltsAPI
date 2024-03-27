@@ -1,5 +1,6 @@
 package br.com.will.macdonalts.domain.produto;
 
+import br.com.will.macdonalts.domain.carrinho.Carrinho;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,8 @@ public class Produto{
     private float preco;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+
 
     private String imagem;
 
