@@ -22,7 +22,6 @@ public class CarrinhoService {
     UsuarioRepository usuarioRepository;
 
     public ResponseEntity inserirProduto(CarrinhoDTO carrinhoDTO, Usuario logado) {
-        System.out.println("#################################" + carrinhoDTO);
         var produto = produtoRepository.getReferenceById(carrinhoDTO.produto_id());
         var carrinho = new Carrinho(carrinhoDTO.quantidade(), produto, logado.getLogin());
         carrinhoRepository.save(carrinho);

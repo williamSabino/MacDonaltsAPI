@@ -1,7 +1,7 @@
 package br.com.will.macdonalts.domain.produto;
 
 public enum Categoria {
-    HAMBURGUER("gamburguer"),
+    HAMBURGUER("hamburguer"),
     SANDUICHE("sanduiche"),
     REFRIGERANTE("refrigerante"),
     SUCO("SUCO");
