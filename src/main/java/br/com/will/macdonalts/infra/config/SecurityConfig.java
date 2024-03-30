@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                                .requestMatchers("/auth/noLogin").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/sendMail", "/sendMailWhithAttachment").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/produto").hasRole("ADMIN")
                                 .anyRequest().authenticated()

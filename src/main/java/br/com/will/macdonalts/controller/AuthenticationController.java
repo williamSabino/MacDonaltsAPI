@@ -26,4 +26,9 @@ public class AuthenticationController {
     public ResponseEntity register(@Valid @RequestBody UsuarioRegisterDTO usuarioRegisterDTO){
         return usuarioService.register(usuarioRegisterDTO);
     }
+
+    @PostMapping("/noLogin")
+    public ResponseEntity noLogin(){
+        return usuarioService.noLogin();
+    }
 }

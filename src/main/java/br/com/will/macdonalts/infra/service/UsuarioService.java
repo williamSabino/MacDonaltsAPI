@@ -1,6 +1,7 @@
 package br.com.will.macdonalts.infra.service;
 
 import br.com.will.macdonalts.domain.token.TokenJWTDTO;
+import br.com.will.macdonalts.domain.usuario.Role;
 import br.com.will.macdonalts.domain.usuario.Usuario;
 import br.com.will.macdonalts.domain.usuario.UsuarioDTO;
 import br.com.will.macdonalts.domain.usuario.UsuarioRegisterDTO;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @Service
 public class UsuarioService {
@@ -34,5 +37,14 @@ public class UsuarioService {
         Usuario usuario = new Usuario(usuarioRegisterDTO.login(), senhaEncriptada, usuarioRegisterDTO.role());
         repository.save(usuario);
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity noLogin() {
+        int random = (int) (Math.random() * 1000);
+        String user = "user"+random;
+        UsuarioRegisterDTO userRegisterDto = new UsuarioRegisterDTO(user, user, Role.USER);
+        register(userRegisterDto);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(user,user);
+        return login(usuarioDTO);
     }
 }
