@@ -23,9 +23,13 @@ public class CarrinhoService {
 
     public ResponseEntity inserirProduto(CarrinhoDTO carrinhoDTO, Usuario logado) {
         var produto = produtoRepository.getReferenceById(carrinhoDTO.produto_id());
+        var contemProduto = carrinhoRepository.usuarioContainProduto(logado.getLogin(), produto);
+        if(contemProduto.isEmpty()){
         var carrinho = new Carrinho(carrinhoDTO.quantidade(), produto, logado.getLogin());
         carrinhoRepository.save(carrinho);
         return ResponseEntity.ok(carrinho);
+        }
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity listarProdutosNoCarrinho(Usuario logado) {
@@ -35,5 +39,15 @@ public class CarrinhoService {
                 .map(c -> new Carrinho(c.id(), c.quantidade(), logado.getLogin(),produtoRepository.getReferenceById(c.produto_id())))
                 .toList();
         return ResponseEntity.ok(listaCarrinho);
+    }
+
+    public ResponseEntity deletarProduto(Long id, Usuario logado) {
+        var produto = produtoRepository.getReferenceById(id);
+        var carrinho = this.carrinhoRepository.usuarioContainProduto(logado.getLogin(), produto);
+        if(carrinho.isPresent()){
+            carrinhoRepository.deletarProduto(logado.getLogin(), produto);
+        return ResponseEntity.ok("Produto Deletado");
+        }
+        return ResponseEntity.badRequest().body("Produto não deletado");
     }
 }

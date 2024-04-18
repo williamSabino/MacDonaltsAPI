@@ -3,6 +3,7 @@ package br.com.will.macdonalts.controller;
 import br.com.will.macdonalts.domain.carrinho.CarrinhoDTO;
 import br.com.will.macdonalts.domain.usuario.Usuario;
 import br.com.will.macdonalts.infra.service.CarrinhoService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,11 @@ public class CarrinhoController {
     @GetMapping
     public ResponseEntity listarProdutosNoCarrinho(@AuthenticationPrincipal Usuario logado){
         return service.listarProdutosNoCarrinho(logado);
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletarProdutoCarrinho(@PathVariable Long id, @AuthenticationPrincipal Usuario logado){
+        return service.deletarProduto(id, logado);
     }
 }
