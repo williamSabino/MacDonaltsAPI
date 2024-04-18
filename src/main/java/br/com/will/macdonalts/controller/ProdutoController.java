@@ -4,6 +4,8 @@ import br.com.will.macdonalts.domain.produto.ProdutoDto;
 import br.com.will.macdonalts.infra.service.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,8 +17,8 @@ public class ProdutoController {
     private ProdutoService service;
 
     @GetMapping
-    public ResponseEntity listarProdutos(){
-        return service.listarProdutos();
+    public ResponseEntity listarProdutos(@PageableDefault(sort = {"categoria"}) Pageable pageable, String categoria){
+        return service.listarProdutos(pageable, categoria);
     }
 
     @GetMapping("/{id}")
@@ -28,4 +30,5 @@ public class ProdutoController {
     public ResponseEntity criarProduto(@Valid @RequestBody ProdutoDto produto, UriComponentsBuilder uriBuilder){
         return service.criarProduto(produto, uriBuilder);
     }
+
 }
