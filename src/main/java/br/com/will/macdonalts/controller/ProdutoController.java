@@ -21,6 +21,11 @@ public class ProdutoController {
         return service.listarProdutos(pageable, categoria);
     }
 
+    @GetMapping("/preco")
+    public ResponseEntity listarProdutosPorPreco(Integer preco){
+        return service.listarProdutoPorPreco(preco);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity detalharProduto(@PathVariable Long id){
         return service.detalharProduto(id);

@@ -31,6 +31,16 @@ public class ProdutoService {
                 .toList();
         return ResponseEntity.ok().body(listaProdutosDTO);
     }
+
+    public ResponseEntity listarProdutoPorPreco(Integer filtro){
+        if(filtro > 100){
+            var produtos = repository.listarPorPreco(filtro);
+            return ResponseEntity.ok(produtos);
+        }
+        var produtos = repository.listarPorPrecoMenorQuePreco(filtro);
+        return ResponseEntity.ok(produtos);
+    }
+
     public ResponseEntity detalharProduto(Long id) {
         var produto = repository.findById(id);
         if(produto.isPresent()){
